@@ -1,9 +1,7 @@
 ﻿using CorpseLib.Json;
 using CorpseLib.Network;
-using CorpseLib.Serialize;
-using CorpseLib.Web.Http;
 
-namespace CorpseRemote.TouchPortal
+namespace TouchPortalCorpse
 {
     public class TouchPortalProtocol(string id) : JsonProtocol
     {
