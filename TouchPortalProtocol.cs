@@ -3,9 +3,9 @@ using CorpseLib.Network;
 using CorpseLib.Serialize;
 using CorpseLib.Web.Http;
 
-namespace CompanionCorpse.TouchPortal
+namespace CorpseRemote.TouchPortal
 {
-    public class TouchPortalProtocol(string id) : JProtocol
+    public class TouchPortalProtocol(string id) : JsonProtocol
     {
         public static TouchPortalProtocol? NewConnection(string pluginUUID)
         {
@@ -19,22 +19,22 @@ namespace CompanionCorpse.TouchPortal
 
         protected override void OnClientConnected()
         {
-            Send(new JObject()
+            Send(new JsonObject()
             {
                 { "type", "pair" },
                 { "id", m_ID }
             });
         }
 
-        protected override void OnReceive(JObject receivedEvent)
+        protected override void OnReceive(JsonObject receivedEvent)
         {
             if (receivedEvent.TryGet("action", out string? actionID) &&
                 receivedEvent.TryGet("event", out string? @event) &&
                 receivedEvent.TryGet("context", out string? context) &&
                 receivedEvent.TryGet("device", out string? device) &&
-                receivedEvent.TryGet("payload", out JObject? payload) &&
-                payload!.TryGet("settings", out JObject? settings) &&
-                payload.TryGet("coordinates", out JObject? coordinates) &&
+                receivedEvent.TryGet("payload", out JsonObject? payload) &&
+                payload!.TryGet("settings", out JsonObject? settings) &&
+                payload.TryGet("coordinates", out JsonObject? coordinates) &&
                 coordinates!.TryGet("column", out int? column) &&
                 coordinates.TryGet("row", out int? row) &&
                 payload.TryGet("isInMultiAction", out bool? isInMultiAction))
