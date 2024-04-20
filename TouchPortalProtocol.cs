@@ -1,4 +1,5 @@
-﻿using CorpseLib.Json;
+﻿using CorpseLib.DataNotation;
+using CorpseLib.Json;
 using CorpseLib.Network;
 
 namespace TouchPortalCorpse
@@ -17,22 +18,22 @@ namespace TouchPortalCorpse
 
         protected override void OnClientConnected()
         {
-            Send(new JsonObject()
+            Send(new DataObject()
             {
                 { "type", "pair" },
                 { "id", m_ID }
             });
         }
 
-        protected override void OnReceive(JsonObject receivedEvent)
+        protected override void OnReceive(DataObject receivedEvent)
         {
             if (receivedEvent.TryGet("action", out string? actionID) &&
                 receivedEvent.TryGet("event", out string? @event) &&
                 receivedEvent.TryGet("context", out string? context) &&
                 receivedEvent.TryGet("device", out string? device) &&
-                receivedEvent.TryGet("payload", out JsonObject? payload) &&
-                payload!.TryGet("settings", out JsonObject? settings) &&
-                payload.TryGet("coordinates", out JsonObject? coordinates) &&
+                receivedEvent.TryGet("payload", out DataObject? payload) &&
+                payload!.TryGet("settings", out DataObject? settings) &&
+                payload.TryGet("coordinates", out DataObject? coordinates) &&
                 coordinates!.TryGet("column", out int? column) &&
                 coordinates.TryGet("row", out int? row) &&
                 payload.TryGet("isInMultiAction", out bool? isInMultiAction))
